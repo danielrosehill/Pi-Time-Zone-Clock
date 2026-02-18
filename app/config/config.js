@@ -15,10 +15,6 @@ const DEFAULTS = {
   geonameId: 281184,
   timezone: 'Asia/Jerusalem',
 
-  // API keys
-  openweatherApiKey: '',
-  iqairApiKey: '',
-
   // Display
   bottomBarMode: 'auto',
   use24hr: true,
@@ -43,8 +39,6 @@ const ENV_MAP = {
   LONGITUDE: { key: 'longitude', parse: parseFloat },
   GEONAME_ID: { key: 'geonameId', parse: (v) => parseInt(v, 10) },
   TIMEZONE: { key: 'timezone', parse: String },
-  OPENWEATHER_API_KEY: { key: 'openweatherApiKey', parse: String },
-  IQAIR_API_KEY: { key: 'iqairApiKey', parse: String },
 };
 
 function ensureDataDir() {
