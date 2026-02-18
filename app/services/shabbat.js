@@ -1,11 +1,12 @@
 const fetch = require('node-fetch');
-const defaults = require('../config/defaults');
+const config = require('../config/config');
 
 let shabbatData = null; // cached weekly data
 
 async function fetchWeeklyData() {
   try {
-    const url = `https://www.hebcal.com/hebcal?v=1&cfg=json&maj=on&min=off&mod=off&nx=off&c=on&M=on&s=on&geo=geoname&geonameid=${defaults.geonameId}`;
+    const geonameId = config.get('geonameId');
+    const url = `https://www.hebcal.com/hebcal?v=1&cfg=json&maj=on&min=off&mod=off&nx=off&c=on&M=on&s=on&geo=geoname&geonameid=${geonameId}`;
     const res = await fetch(url);
     if (!res.ok) throw new Error(`Hebcal shabbat ${res.status}`);
     const data = await res.json();
@@ -50,7 +51,8 @@ function checkShabbatMode(state) {
   state.shabbat.havdalah = shabbatData.havdalah;
 
   // Format times for display (HH:MM)
-  const fmtOpts = { timeZone: defaults.timezone, hour: '2-digit', minute: '2-digit', hour12: false };
+  const tz = config.get('timezone');
+  const fmtOpts = { timeZone: tz, hour: '2-digit', minute: '2-digit', hour12: false };
   state.shabbat.candleLightingTime = new Intl.DateTimeFormat('en-GB', fmtOpts).format(start);
   state.shabbat.havdalahTime = new Intl.DateTimeFormat('en-GB', fmtOpts).format(end);
 }
@@ -58,7 +60,7 @@ function checkShabbatMode(state) {
 module.exports = {
   start(state) {
     fetchWeeklyData().then(() => checkShabbatMode(state));
-    setInterval(() => fetchWeeklyData(), defaults.shabbatDataInterval);
-    setInterval(() => checkShabbatMode(state), defaults.shabbatCheckInterval);
+    setInterval(() => fetchWeeklyData(), config.DEFAULTS.shabbatDataInterval);
+    setInterval(() => checkShabbatMode(state), config.DEFAULTS.shabbatCheckInterval);
   },
 };

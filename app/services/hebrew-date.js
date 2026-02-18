@@ -1,11 +1,10 @@
 const fetch = require('node-fetch');
-const defaults = require('../config/defaults');
+const config = require('../config/config');
 
 function todayString() {
-  // Get today's date in Jerusalem timezone
   const now = new Date();
   const fmt = new Intl.DateTimeFormat('en-CA', {
-    timeZone: defaults.timezone,
+    timeZone: config.get('timezone'),
     year: 'numeric', month: '2-digit', day: '2-digit',
   });
   return fmt.format(now); // YYYY-MM-DD
@@ -34,6 +33,6 @@ async function poll(state) {
 module.exports = {
   start(state) {
     poll(state);
-    setInterval(() => poll(state), defaults.hebrewDateInterval);
+    setInterval(() => poll(state), config.DEFAULTS.hebrewDateInterval);
   },
 };

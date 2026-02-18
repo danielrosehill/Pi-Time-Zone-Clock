@@ -1,5 +1,5 @@
 const fetch = require('node-fetch');
-const defaults = require('../config/defaults');
+const config = require('../config/config');
 
 // Weather icon mapping (OWM icon code → emoji)
 const ICON_MAP = {
@@ -15,10 +15,12 @@ const ICON_MAP = {
 };
 
 async function poll(state) {
-  const key = process.env.OPENWEATHER_API_KEY;
+  const key = config.get('openweatherApiKey');
   if (!key) return;
   try {
-    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${defaults.latitude}&lon=${defaults.longitude}&units=metric&appid=${key}`;
+    const lat = config.get('latitude');
+    const lon = config.get('longitude');
+    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${key}`;
     const res = await fetch(url);
     if (!res.ok) throw new Error(`Weather API ${res.status}`);
     const data = await res.json();
@@ -35,6 +37,6 @@ async function poll(state) {
 module.exports = {
   start(state) {
     poll(state);
-    setInterval(() => poll(state), defaults.weatherInterval);
+    setInterval(() => poll(state), config.DEFAULTS.weatherInterval);
   },
 };

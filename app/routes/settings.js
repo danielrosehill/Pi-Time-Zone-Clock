@@ -1,57 +1,70 @@
 const express = require('express');
-const fs = require('fs');
-const path = require('path');
+const config = require('../config/config');
 
 const router = express.Router();
-const DATA_DIR = path.join(__dirname, '..', 'data');
-const SETTINGS_FILE = path.join(DATA_DIR, 'settings.json');
 
-const DEFAULT_SETTINGS = {
-  bottomBarMode: 'auto',        // 'auto' | 'news' | 'shabbat'
-  alertsEnabled: true,
-  alertsInterval: 60,           // seconds
-  newsRssUrl: 'https://www.timesofisrael.com/feed/',
-  use24hr: true,
-  latitude: 31.77,
-  longitude: 35.23,
-  geonameId: 281184,
-};
+// Keys that contain secrets — mask in GET responses
+const SECRET_KEYS = ['openweatherApiKey', 'iqairApiKey'];
 
-function ensureDataDir() {
-  if (!fs.existsSync(DATA_DIR)) {
-    fs.mkdirSync(DATA_DIR, { recursive: true });
-  }
-}
+// Keys that are internal-only and should not appear in the settings UI
+const INTERNAL_KEYS = [
+  'weatherInterval', 'airQualityInterval', 'hebrewDateInterval',
+  'shabbatDataInterval', 'shabbatCheckInterval', '_alertsPollInterval',
+  'newsInterval', 'port',
+];
 
-function getSettings() {
-  ensureDataDir();
-  try {
-    if (fs.existsSync(SETTINGS_FILE)) {
-      const raw = fs.readFileSync(SETTINGS_FILE, 'utf-8');
-      return { ...DEFAULT_SETTINGS, ...JSON.parse(raw) };
-    }
-  } catch (err) {
-    console.error('Error reading settings:', err.message);
-  }
-  return { ...DEFAULT_SETTINGS };
-}
-
-function saveSettings(settings) {
-  ensureDataDir();
-  fs.writeFileSync(SETTINGS_FILE, JSON.stringify(settings, null, 2));
+function maskSecret(value) {
+  if (!value || typeof value !== 'string' || value.length === 0) return '';
+  if (value.length <= 4) return '****';
+  return '****' + value.slice(-4);
 }
 
 router.get('/', (_req, res) => {
-  res.json(getSettings());
+  const all = config.getAll();
+
+  // Remove internal keys
+  for (const key of INTERNAL_KEYS) {
+    delete all[key];
+  }
+
+  // Mask secrets
+  for (const key of SECRET_KEYS) {
+    if (all[key]) {
+      all[key] = maskSecret(all[key]);
+    }
+  }
+
+  res.json(all);
 });
 
 router.post('/', (req, res) => {
-  const current = getSettings();
-  const updated = { ...current, ...req.body };
-  saveSettings(updated);
+  const body = { ...req.body };
+
+  // Don't save masked placeholder values back — only save if user typed a real key
+  for (const key of SECRET_KEYS) {
+    if (key in body) {
+      const val = body[key];
+      if (!val || val.startsWith('****')) {
+        delete body[key];
+      }
+    }
+  }
+
+  const updated = config.update(body);
+
+  // Mask secrets in response
+  for (const key of SECRET_KEYS) {
+    if (updated[key]) {
+      updated[key] = maskSecret(updated[key]);
+    }
+  }
+
+  // Remove internal keys from response
+  for (const key of INTERNAL_KEYS) {
+    delete updated[key];
+  }
+
   res.json(updated);
 });
 
 module.exports = router;
-module.exports.getSettings = getSettings;
-module.exports.saveSettings = saveSettings;

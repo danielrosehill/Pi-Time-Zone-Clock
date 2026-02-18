@@ -1,10 +1,8 @@
 const fetch = require('node-fetch');
-const defaults = require('../config/defaults');
-const { getSettings } = require('../routes/settings');
+const config = require('../config/config');
 
 async function poll(state) {
-  const settings = getSettings();
-  if (settings.alertsEnabled === false) {
+  if (config.get('alertsEnabled') === false) {
     state.alerts = { active: false, alerts: [] };
     return;
   }
@@ -47,8 +45,7 @@ async function poll(state) {
 module.exports = {
   start(state) {
     poll(state);
-    const settings = getSettings();
-    const interval = (settings.alertsInterval || defaults.alertsInterval / 1000) * 1000;
+    const interval = (config.get('alertsInterval') || 60) * 1000;
     setInterval(() => poll(state), interval);
   },
 };

@@ -1,0 +1,20 @@
+services:
+  pi-clock:
+    build: .
+    container_name: pi-clock
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      - pi-clock-data:/app/data
+    environment:
+      # Optional env var overrides — or configure everything via the web UI at /settings
+      - OPENWEATHER_API_KEY=${OPENWEATHER_API_KEY:-}
+      - IQAIR_API_KEY=${IQAIR_API_KEY:-}
+      # - TIMEZONE=Asia/Jerusalem
+      # - LATITUDE=31.77
+      # - LONGITUDE=35.23
+      # - GEONAME_ID=281184
+
+volumes:
+  pi-clock-data:

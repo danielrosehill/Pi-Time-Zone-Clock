@@ -1,14 +1,10 @@
 const fetch = require('node-fetch');
 const { parseStringPromise } = require('xml2js');
-const defaults = require('../config/defaults');
-const { getSettings } = require('../routes/settings');
-
-const DEFAULT_RSS = 'https://www.timesofisrael.com/feed/';
+const config = require('../config/config');
 
 async function poll(state) {
   try {
-    const settings = getSettings();
-    const rssUrl = settings.newsRssUrl || DEFAULT_RSS;
+    const rssUrl = config.get('newsRssUrl') || 'https://www.timesofisrael.com/feed/';
     const res = await fetch(rssUrl);
     if (!res.ok) throw new Error(`RSS feed ${res.status}`);
     const xml = await res.text();
@@ -28,6 +24,6 @@ async function poll(state) {
 module.exports = {
   start(state) {
     poll(state);
-    setInterval(() => poll(state), defaults.newsInterval);
+    setInterval(() => poll(state), config.DEFAULTS.newsInterval);
   },
 };

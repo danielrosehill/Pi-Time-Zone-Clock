@@ -1,7 +1,10 @@
 require('dotenv').config();
 const express = require('express');
 const path = require('path');
-const defaults = require('./config/defaults');
+const config = require('./config/config');
+
+// Seed settings.json from env vars on first run
+config.seedFromEnv();
 
 const app = express();
 app.use(express.json());
@@ -46,7 +49,8 @@ function startServices() {
   newsService.start(state);
 }
 
-app.listen(defaults.port, () => {
-  console.log(`Pi Clock running on http://localhost:${defaults.port}`);
+const port = config.get('port');
+app.listen(port, () => {
+  console.log(`Pi Clock running on http://localhost:${port}`);
   startServices();
 });

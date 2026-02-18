@@ -16,6 +16,20 @@
 
     <form id="settings-form">
       <section>
+        <h2>API Keys</h2>
+        <label>
+          OpenWeather API Key
+          <input type="password" name="openweatherApiKey" placeholder="Enter API key" autocomplete="off">
+          <span class="hint">Get a free key at openweathermap.org</span>
+        </label>
+        <label>
+          IQAir API Key
+          <input type="password" name="iqairApiKey" placeholder="Enter API key" autocomplete="off">
+          <span class="hint">Get a free key at iqair.com/dashboard</span>
+        </label>
+      </section>
+
+      <section>
         <h2>Display</h2>
         <label>
           Bottom Bar Mode
@@ -31,6 +45,28 @@
             <option value="true">24-hour</option>
             <option value="false">12-hour</option>
           </select>
+        </label>
+      </section>
+
+      <section>
+        <h2>Location & Timezone</h2>
+        <label>
+          Timezone
+          <input type="text" name="timezone" placeholder="e.g. Asia/Jerusalem">
+          <span class="hint">IANA timezone identifier (e.g. America/New_York, Europe/London)</span>
+        </label>
+        <label>
+          Latitude
+          <input type="number" name="latitude" step="0.01">
+        </label>
+        <label>
+          Longitude
+          <input type="number" name="longitude" step="0.01">
+        </label>
+        <label>
+          GeoNames ID
+          <input type="number" name="geonameId">
+          <span class="hint">Used for Shabbat times — find yours at geonames.org</span>
         </label>
       </section>
 
@@ -51,22 +87,6 @@
         <label>
           RSS Feed URL
           <input type="url" name="newsRssUrl" placeholder="https://www.timesofisrael.com/feed/">
-        </label>
-      </section>
-
-      <section>
-        <h2>Location</h2>
-        <label>
-          Latitude
-          <input type="number" name="latitude" step="0.01">
-        </label>
-        <label>
-          Longitude
-          <input type="number" name="longitude" step="0.01">
-        </label>
-        <label>
-          GeoNames ID
-          <input type="number" name="geonameId">
         </label>
       </section>
 

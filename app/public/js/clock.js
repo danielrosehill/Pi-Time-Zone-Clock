@@ -1,6 +1,6 @@
 // Client-side clock tick — updates every second
 (function () {
-  const TIMEZONE = 'Asia/Jerusalem';
+  let TIMEZONE = 'Asia/Jerusalem'; // default, overridden by settings
 
   const $localTime = document.getElementById('local-time');
   const $localSeconds = document.getElementById('local-seconds');
@@ -12,13 +12,11 @@
   const pad = (n) => String(n).padStart(2, '0');
 
   const DAYS = ['SUN', 'MON', 'TUES', 'WEDS', 'THURS', 'FRI', 'SAT'];
-  const MONTHS = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN',
-                  'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
 
   function tick() {
     const now = new Date();
 
-    // Local (Jerusalem)
+    // Local time in configured timezone
     const localParts = new Intl.DateTimeFormat('en-GB', {
       timeZone: TIMEZONE,
       hour: '2-digit', minute: '2-digit', second: '2-digit',
@@ -34,7 +32,7 @@
     $utcTime.textContent = `${pad(now.getUTCHours())}:${pad(now.getUTCMinutes())}`;
     $utcSeconds.textContent = pad(now.getUTCSeconds());
 
-    // Date in Jerusalem timezone
+    // Date in configured timezone
     const dateParts = new Intl.DateTimeFormat('en-GB', {
       timeZone: TIMEZONE,
       weekday: 'short', month: 'short', day: 'numeric',
@@ -52,6 +50,17 @@
     $gregDate.textContent = `${dp.month.toUpperCase()} ${dp.day}`;
   }
 
-  tick();
-  setInterval(tick, 1000);
+  // Fetch timezone from settings, then start ticking
+  fetch('/api/settings')
+    .then((res) => res.json())
+    .then((settings) => {
+      if (settings.timezone) {
+        TIMEZONE = settings.timezone;
+      }
+    })
+    .catch(() => {}) // use default on error
+    .finally(() => {
+      tick();
+      setInterval(tick, 1000);
+    });
 })();

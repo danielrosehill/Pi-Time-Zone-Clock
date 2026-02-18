@@ -67,7 +67,7 @@ label {
 
 label:last-child { margin-bottom: 0; }
 
-select, input[type="url"], input[type="number"] {
+select, input[type="url"], input[type="number"], input[type="text"], input[type="password"] {
   display: block;
   width: 100%;
   margin-top: 0.35rem;
@@ -120,6 +120,14 @@ button[type="submit"]:hover { opacity: 0.9; }
   margin-top: 0.75rem;
   color: #4caf50;
   font-size: 0.85rem;
+}
+
+.hint {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  opacity: 0.7;
 }
 
 .hidden { display: none; }
