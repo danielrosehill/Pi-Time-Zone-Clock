@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pi Clock</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/clock.css">
+</head>
+<body>
+  <!-- Top bar: weather + AQI -->
+  <div id="top-bar">
+    <div id="weather-section">
+      <span id="temp">--°</span>
+      <span id="weather-icon">☁️</span>
+    </div>
+    <div id="aqi-section">
+      <span id="aqi-label">AQI</span>
+      <span id="aqi-value">--</span>
+      <span id="pm25-label">PM2.5</span>
+      <span id="pm25-value">--</span>
+    </div>
+  </div>
+
+  <!-- Main clock area -->
+  <div id="main">
+    <div id="clock-container">
+      <div class="clock-column">
+        <div class="clock-label">LOCAL</div>
+        <div class="clock-time" id="local-time">--:--</div>
+        <div class="clock-seconds" id="local-seconds">--</div>
+      </div>
+      <div class="clock-divider"></div>
+      <div class="clock-column">
+        <div class="clock-label">UTC</div>
+        <div class="clock-time" id="utc-time">--:--</div>
+        <div class="clock-seconds" id="utc-seconds">--</div>
+      </div>
+    </div>
+    <div id="date-row">
+      <span id="day-name">---</span>
+      <span class="date-sep">—</span>
+      <span id="greg-date">--- --</span>
+      <span class="date-sep">—</span>
+      <span id="hebrew-date">---</span>
+    </div>
+  </div>
+
+  <!-- Bottom bar: news / shabbat / alerts -->
+  <div id="bottom-bar">
+    <div id="alert-section" class="hidden">
+      <span id="alert-icon">🚨</span>
+      <span id="alert-text"></span>
+    </div>
+    <div id="news-section">
+      <span id="news-icon">📰</span>
+      <span id="news-headline">Loading headlines…</span>
+    </div>
+    <div id="shabbat-section" class="hidden">
+      <span class="shabbat-candle">🕯️</span>
+      <span id="shabbat-info">---</span>
+      <span class="shabbat-candle">🕯️</span>
+    </div>
+  </div>
+
+  <script src="/js/clock.js"></script>
+  <script src="/js/dashboard.js"></script>
+</body>
+</html>

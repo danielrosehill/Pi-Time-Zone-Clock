@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pi Clock — Settings</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/settings.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Pi Clock Settings</h1>
+    <a href="/" class="back-link">← Back to Clock</a>
+
+    <form id="settings-form">
+      <section>
+        <h2>Display</h2>
+        <label>
+          Bottom Bar Mode
+          <select name="bottomBarMode">
+            <option value="auto">Auto (Shabbat-aware)</option>
+            <option value="news">Always News</option>
+            <option value="shabbat">Always Shabbat</option>
+          </select>
+        </label>
+        <label>
+          Time Format
+          <select name="use24hr">
+            <option value="true">24-hour</option>
+            <option value="false">12-hour</option>
+          </select>
+        </label>
+      </section>
+
+      <section>
+        <h2>Alerts</h2>
+        <label class="checkbox-label">
+          <input type="checkbox" name="alertsEnabled">
+          Enable Red Alerts (Pikud HaOref)
+        </label>
+        <label>
+          Alert Poll Interval (seconds)
+          <input type="number" name="alertsInterval" min="10" max="300" step="10">
+        </label>
+      </section>
+
+      <section>
+        <h2>News</h2>
+        <label>
+          RSS Feed URL
+          <input type="url" name="newsRssUrl" placeholder="https://www.timesofisrael.com/feed/">
+        </label>
+      </section>
+
+      <section>
+        <h2>Location</h2>
+        <label>
+          Latitude
+          <input type="number" name="latitude" step="0.01">
+        </label>
+        <label>
+          Longitude
+          <input type="number" name="longitude" step="0.01">
+        </label>
+        <label>
+          GeoNames ID
+          <input type="number" name="geonameId">
+        </label>
+      </section>
+
+      <button type="submit">Save Settings</button>
+      <div id="save-status" class="hidden">Settings saved.</div>
+    </form>
+  </div>
+  <script src="/js/settings.js"></script>
+</body>
+</html>

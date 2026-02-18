@@ -1,0 +1,16 @@
+[Unit]
+Description=Pi Time Zone Clock
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/home/pi/Pi-Time-Zone-Clock/app
+ExecStart=/usr/bin/node server.js
+Restart=always
+RestartSec=5
+EnvironmentFile=/home/pi/Pi-Time-Zone-Clock/app/.env
+
+[Install]
+WantedBy=multi-user.target

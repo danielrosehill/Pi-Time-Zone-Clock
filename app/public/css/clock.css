@@ -1,0 +1,207 @@
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg-main: #1b2340;
+  --bg-bar: #1a1a1a;
+  --text-white: #f0f0f0;
+  --text-gold: #d4a030;
+  --text-dim: #8890a8;
+  --alert-red: #e53935;
+  --news-orange: #ff9800;
+  --font-main: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+html, body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  cursor: none;
+  font-family: var(--font-main);
+  background: var(--bg-main);
+  color: var(--text-white);
+}
+
+.hidden { display: none !important; }
+
+/* ---- Top Bar ---- */
+#top-bar {
+  background: var(--bg-bar);
+  height: 6vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 3vw;
+  font-size: 2.2vh;
+  font-weight: 400;
+}
+
+#weather-section {
+  display: flex;
+  align-items: center;
+  gap: 1vw;
+}
+
+#temp {
+  font-size: 2.8vh;
+  font-weight: 600;
+}
+
+#weather-icon {
+  font-size: 2.8vh;
+}
+
+#aqi-section {
+  display: flex;
+  align-items: center;
+  gap: 0.8vw;
+  color: var(--text-gold);
+}
+
+#aqi-label, #pm25-label {
+  font-size: 1.6vh;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  opacity: 0.7;
+}
+
+#aqi-value, #pm25-value {
+  font-size: 2.4vh;
+  font-weight: 600;
+}
+
+/* ---- Main Clock ---- */
+#main {
+  height: 88vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2vh;
+}
+
+#clock-container {
+  display: flex;
+  align-items: center;
+  gap: 4vw;
+}
+
+.clock-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.clock-label {
+  font-size: 2.5vh;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  color: var(--text-dim);
+  margin-bottom: 0.5vh;
+}
+
+.clock-time {
+  font-size: 14vw;
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.clock-seconds {
+  font-size: 3vw;
+  font-weight: 300;
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+  margin-top: 0.5vh;
+}
+
+.clock-divider {
+  width: 2px;
+  height: 16vw;
+  background: linear-gradient(to bottom, transparent, var(--text-dim), transparent);
+}
+
+/* ---- Date Row ---- */
+#date-row {
+  display: flex;
+  align-items: center;
+  gap: 1.5vw;
+  font-size: 2.8vh;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--text-gold);
+  text-transform: uppercase;
+}
+
+.date-sep {
+  color: var(--text-dim);
+  font-weight: 300;
+}
+
+/* ---- Bottom Bar ---- */
+#bottom-bar {
+  background: var(--bg-bar);
+  height: 6vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 3vw;
+  font-size: 2vh;
+  font-weight: 400;
+  position: relative;
+}
+
+#alert-section {
+  position: absolute;
+  left: 3vw;
+  display: flex;
+  align-items: center;
+  gap: 0.8vw;
+  color: var(--alert-red);
+  font-weight: 600;
+  animation: alertPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes alertPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+#news-section {
+  display: flex;
+  align-items: center;
+  gap: 1vw;
+  max-width: 80vw;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+#news-icon {
+  color: var(--news-orange);
+  font-size: 2.4vh;
+}
+
+#news-headline {
+  color: var(--text-white);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#shabbat-section {
+  display: flex;
+  align-items: center;
+  gap: 1.5vw;
+  font-size: 2.2vh;
+  font-weight: 600;
+  color: var(--text-gold);
+  letter-spacing: 0.05em;
+}
+
+.shabbat-candle {
+  font-size: 2.6vh;
+}
