@@ -2,6 +2,8 @@
 
 A Raspberry Pi dashboard clock displaying dual time zones (Jerusalem local + UTC), weather, air quality, Hebrew calendar dates, Pikud HaOref red alerts, and Times of Israel headlines. Automatically switches to Shabbat mode with parasha and candle lighting/havdalah times.
 
+![Pi Time Zone Clock](screenshots/2.png)
+
 ## Features
 
 - **Dual clocks** — Jerusalem local time + UTC, ticking every second
@@ -108,3 +110,8 @@ sudo journalctl -u pi-clock -f
 - **Backend**: Node.js + Express. Each data service polls its API on independent intervals and updates a shared in-memory state object.
 - **Frontend**: Vanilla HTML/CSS/JS. Client-side clock ticks at 1s; dashboard polls `/api/state` every 10s.
 - **No build step** — lightweight enough to run directly on a Pi Zero 2W+.
+
+## Fonts
+
+- **Clock digits**: [Plus Jakarta Sans](https://fonts.google.com/specimen/Plus+Jakarta+Sans) (weight 200, extra-light)
+- **UI text**: [Inter](https://fonts.google.com/specimen/Inter) (weights 300–700)
