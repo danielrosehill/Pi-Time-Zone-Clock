@@ -6,7 +6,7 @@
   <title>Pi Clock</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/clock.css">
 </head>
 <body>
@@ -28,20 +28,19 @@
   <div id="main">
     <div id="clock-container">
       <div class="clock-column">
-        <div class="clock-label">LOCAL</div>
         <div class="clock-time" id="local-time">--:--</div>
-        <div class="clock-seconds" id="local-seconds">--</div>
+        <div class="clock-label">LOCAL</div>
       </div>
       <div class="clock-divider"></div>
       <div class="clock-column">
-        <div class="clock-label">UTC</div>
         <div class="clock-time" id="utc-time">--:--</div>
-        <div class="clock-seconds" id="utc-seconds">--</div>
+        <div class="clock-label">UTC</div>
       </div>
     </div>
-    <div id="date-row">
+    <div id="day-row">
       <span id="day-name">---</span>
-      <span class="date-sep">—</span>
+    </div>
+    <div id="date-row">
       <span id="greg-date">--- --</span>
       <span class="date-sep">—</span>
       <span id="hebrew-date">---</span>

@@ -1,8 +1,10 @@
 // Dashboard: polls /api/state every 10s, updates DOM, handles mode switching
 (function () {
   const POLL_INTERVAL = 10000;
+  const HEADLINE_CYCLE_INTERVAL = 60000; // cycle headline once per minute
   let currentHeadlineIdx = 0;
   let headlines = [];
+  let newsSource = '';
 
   // DOM refs
   const $temp = document.getElementById('temp');
@@ -31,7 +33,6 @@
 
   function updateHebrewDate(hd) {
     if (!hd) return;
-    // Show month + day (e.g., "ADAR 2")
     $hebrewDate.textContent = `${hd.heDateParts.month} ${hd.heDateParts.day}`.toUpperCase();
   }
 
@@ -45,13 +46,36 @@
     }
   }
 
+  function extractSourceName(rssUrl) {
+    try {
+      const host = new URL(rssUrl).hostname.replace(/^www\./, '');
+      // Extract readable name from domain (e.g. "timesofisrael.com" → "Times of Israel")
+      const known = {
+        'timesofisrael.com': 'Times of Israel',
+        'jpost.com': 'Jerusalem Post',
+        'haaretz.com': 'Haaretz',
+        'ynetnews.com': 'Ynet',
+        'israelnationalnews.com': 'Arutz Sheva',
+        'i24news.tv': 'i24',
+      };
+      return known[host] || host;
+    } catch {
+      return '';
+    }
+  }
+
+  function showCurrentHeadline() {
+    if (headlines.length === 0) return;
+    currentHeadlineIdx = currentHeadlineIdx % headlines.length;
+    const title = headlines[currentHeadlineIdx].title;
+    const suffix = newsSource ? ` [${newsSource}]` : '';
+    $newsHeadline.textContent = title + suffix;
+    currentHeadlineIdx = (currentHeadlineIdx + 1) % headlines.length;
+  }
+
   function updateNews(news) {
     if (!news || news.length === 0) return;
     headlines = news;
-    // Cycle headline
-    currentHeadlineIdx = currentHeadlineIdx % headlines.length;
-    $newsHeadline.textContent = headlines[currentHeadlineIdx].title;
-    currentHeadlineIdx = (currentHeadlineIdx + 1) % headlines.length;
   }
 
   function updateBottomBar(state, settings) {
@@ -63,7 +87,6 @@
     } else if (mode === 'news') {
       showShabbat = false;
     } else {
-      // auto: follow server isShabbat flag
       showShabbat = state.shabbat && state.shabbat.isShabbat;
     }
 
@@ -90,6 +113,11 @@
       const state = await stateRes.json();
       const settings = await settingsRes.json();
 
+      // Extract news source name from configured RSS URL
+      if (settings.newsRssUrl) {
+        newsSource = extractSourceName(settings.newsRssUrl);
+      }
+
       updateWeather(state.weather);
       updateAirQuality(state.airQuality);
       updateHebrewDate(state.hebrewDate);
@@ -100,6 +128,12 @@
     }
   }
 
-  poll();
+  // Initial poll + show first headline
+  poll().then(() => showCurrentHeadline());
+
+  // Poll state every 10s (updates data silently)
   setInterval(poll, POLL_INTERVAL);
+
+  // Cycle to next headline once per minute
+  setInterval(showCurrentHeadline, HEADLINE_CYCLE_INTERVAL);
 })();

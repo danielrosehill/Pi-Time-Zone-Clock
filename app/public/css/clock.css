@@ -80,7 +80,7 @@ html, body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2vh;
+  gap: 1.5vh;
 }
 
 #clock-container {
@@ -95,14 +95,6 @@ html, body {
   align-items: center;
 }
 
-.clock-label {
-  font-size: 2.5vh;
-  font-weight: 600;
-  letter-spacing: 0.3em;
-  color: var(--text-dim);
-  margin-bottom: 0.5vh;
-}
-
 .clock-time {
   font-size: 14vw;
   font-weight: 300;
@@ -111,18 +103,28 @@ html, body {
   font-variant-numeric: tabular-nums;
 }
 
-.clock-seconds {
-  font-size: 3vw;
-  font-weight: 300;
+.clock-label {
+  font-size: 2.8vh;
+  font-weight: 700;
+  letter-spacing: 0.3em;
   color: var(--text-dim);
-  font-variant-numeric: tabular-nums;
-  margin-top: 0.5vh;
+  margin-top: 1vh;
 }
 
 .clock-divider {
   width: 2px;
-  height: 16vw;
+  height: 14vw;
   background: linear-gradient(to bottom, transparent, var(--text-dim), transparent);
+}
+
+/* ---- Day Row ---- */
+#day-row {
+  font-size: 3vh;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  margin-top: 1vh;
 }
 
 /* ---- Date Row ---- */
