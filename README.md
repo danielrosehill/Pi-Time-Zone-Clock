@@ -111,6 +111,14 @@ sudo journalctl -u pi-clock -f
 - **Frontend**: Vanilla HTML/CSS/JS. Client-side clock ticks at 1s; dashboard polls `/api/state` every 10s.
 - **No build step** — lightweight enough to run directly on a Pi Zero 2W+.
 
+## Photos
+
+Running on a 10-inch monitor:
+
+![Full dashboard with news panel](photos/image.png)
+
+![Clock close-up](photos/image%20copy.png)
+
 ## Fonts
 
 - **Clock digits**: [Plus Jakarta Sans](https://fonts.google.com/specimen/Plus+Jakarta+Sans) (weight 200, extra-light)
