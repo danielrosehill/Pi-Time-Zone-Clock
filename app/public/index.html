@@ -10,60 +10,74 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/clock.css">
 </head>
-<body>
-  <!-- Top bar: weather + AQI -->
-  <div id="top-bar">
-    <div id="weather-section">
-      <span id="temp">--°</span>
-      <span id="weather-icon">☁️</span>
+<body class="layout-classic">
+  <div id="clock-side">
+    <!-- Top bar: weather + AQI -->
+    <div id="top-bar">
+      <div id="weather-section">
+        <span id="temp">--°</span>
+        <span id="weather-icon">☁️</span>
+      </div>
+      <div id="aqi-section">
+        <span id="aqi-label">AQI</span>
+        <span id="aqi-value">--</span>
+        <span id="pm25-label">PM2.5</span>
+        <span id="pm25-value">--</span>
+      </div>
     </div>
-    <div id="aqi-section">
-      <span id="aqi-label">AQI</span>
-      <span id="aqi-value">--</span>
-      <span id="pm25-label">PM2.5</span>
-      <span id="pm25-value">--</span>
+
+    <!-- Main clock area -->
+    <div id="main">
+      <div id="clock-container">
+        <div class="clock-column">
+          <div class="clock-time" id="local-time">--:--</div>
+          <div class="clock-label">LOCAL</div>
+        </div>
+        <div class="clock-divider"></div>
+        <div class="clock-column">
+          <div class="clock-time" id="utc-time">--:--</div>
+          <div class="clock-label">UTC</div>
+        </div>
+      </div>
+      <div id="day-row">
+        <span id="day-name">---</span>
+      </div>
+      <div id="date-row">
+        <span id="greg-date">--- --</span>
+        <span class="date-sep">—</span>
+        <span id="hebrew-date">---</span>
+      </div>
+    </div>
+
+    <!-- Bottom bar: news / shabbat / alerts -->
+    <div id="bottom-bar">
+      <div id="alert-section" class="hidden">
+        <span id="alert-icon">🚨</span>
+        <span id="alert-text"></span>
+      </div>
+      <div id="news-section">
+        <span id="news-icon">📰</span>
+        <span id="news-headline">Loading headlines…</span>
+      </div>
+      <div id="shabbat-section" class="hidden">
+        <span class="shabbat-candle">🕯️</span>
+        <span id="shabbat-info">---</span>
+        <span class="shabbat-candle">🕯️</span>
+      </div>
     </div>
   </div>
 
-  <!-- Main clock area -->
-  <div id="main">
-    <div id="clock-container">
-      <div class="clock-column">
-        <div class="clock-time" id="local-time">--:--</div>
-        <div class="clock-label">LOCAL</div>
-      </div>
-      <div class="clock-divider"></div>
-      <div class="clock-column">
-        <div class="clock-time" id="utc-time">--:--</div>
-        <div class="clock-label">UTC</div>
-      </div>
+  <!-- News panel (visible in news-panel layout) -->
+  <div id="news-panel" class="hidden">
+    <div id="news-panel-header">
+      <span id="news-panel-title">LATEST NEWS</span>
+      <span id="news-updated"></span>
     </div>
-    <div id="day-row">
-      <span id="day-name">---</span>
-    </div>
-    <div id="date-row">
-      <span id="greg-date">--- --</span>
-      <span class="date-sep">—</span>
-      <span id="hebrew-date">---</span>
-    </div>
+    <div id="news-panel-list"></div>
   </div>
 
-  <!-- Bottom bar: news / shabbat / alerts -->
-  <div id="bottom-bar">
-    <div id="alert-section" class="hidden">
-      <span id="alert-icon">🚨</span>
-      <span id="alert-text"></span>
-    </div>
-    <div id="news-section">
-      <span id="news-icon">📰</span>
-      <span id="news-headline">Loading headlines…</span>
-    </div>
-    <div id="shabbat-section" class="hidden">
-      <span class="shabbat-candle">🕯️</span>
-      <span id="shabbat-info">---</span>
-      <span class="shabbat-candle">🕯️</span>
-    </div>
-  </div>
+  <!-- Settings gear (bottom-right corner) -->
+  <a id="settings-link" href="/settings" title="Settings">&#9881;</a>
 
   <script src="/js/clock.js"></script>
   <script src="/js/dashboard.js"></script>

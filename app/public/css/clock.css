@@ -123,7 +123,7 @@ html, body {
 /* ---- Day Row ---- */
 #day-row {
   font-family: var(--font-display);
-  font-size: 2.8vw;
+  font-size: 4.2vw;
   font-weight: 500;
   letter-spacing: 0.2em;
   color: var(--text-dim);
@@ -137,7 +137,7 @@ html, body {
   align-items: center;
   gap: 1.5vw;
   font-family: var(--font-display);
-  font-size: 2.2vw;
+  font-size: 3.3vw;
   font-weight: 600;
   letter-spacing: 0.12em;
   color: var(--text-gold);
@@ -215,4 +215,144 @@ html, body {
 
 .shabbat-candle {
   font-size: 2.6vh;
+}
+
+/* ---- Settings Gear ---- */
+#settings-link {
+  position: fixed;
+  bottom: 1vh;
+  right: 1vw;
+  font-size: 2.5vh;
+  color: var(--text-dim);
+  opacity: 0.15;
+  text-decoration: none;
+  z-index: 100;
+  transition: opacity 0.3s;
+}
+
+#settings-link:hover {
+  opacity: 0.6;
+}
+
+/* ---- Layout: Classic (default) ---- */
+.layout-classic #clock-side {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---- Layout: News Panel ---- */
+.layout-news-panel {
+  display: flex !important;
+  flex-direction: row !important;
+}
+
+.layout-news-panel #clock-side {
+  width: 66.667%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.layout-news-panel #news-panel {
+  width: 33.333%;
+  height: 100vh;
+  background: #141a2e;
+  border-left: 1px solid rgba(136, 144, 168, 0.15);
+  display: flex !important;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+#news-panel-header {
+  padding: 2vh 1.5vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--font-main);
+  font-size: 1.8vh;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: var(--text-white);
+  border-bottom: 1px solid rgba(136, 144, 168, 0.15);
+  flex-shrink: 0;
+}
+
+#news-updated {
+  font-size: 1.4vh;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--text-dim);
+  opacity: 0.6;
+}
+
+#news-panel-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1vh 0;
+  scrollbar-width: none;
+}
+
+#news-panel-list::-webkit-scrollbar {
+  display: none;
+}
+
+.news-card {
+  display: flex;
+  align-items: center;
+  gap: 1vw;
+  padding: 1.5vh 1.5vw;
+  border-bottom: 1px solid rgba(136, 144, 168, 0.08);
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.2s;
+  overflow: hidden;
+}
+
+.news-card:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.news-card-thumb {
+  width: 6vw;
+  height: 4vw;
+  object-fit: cover;
+  border-radius: 4px;
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.news-card-title {
+  font-family: var(--font-main);
+  font-size: 2vh;
+  font-weight: 400;
+  color: var(--text-white);
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-width: 0;
+}
+
+/* Adjust clock sizes in news-panel layout */
+.layout-news-panel .clock-time {
+  font-size: 9vw;
+}
+
+.layout-news-panel .clock-label {
+  font-size: 1.2vw;
+}
+
+.layout-news-panel .clock-divider {
+  height: 8vw;
+}
+
+.layout-news-panel #day-row {
+  font-size: 2.7vw;
+}
+
+.layout-news-panel #date-row {
+  font-size: 2.1vw;
 }

@@ -6,6 +6,8 @@
   let headlines = [];
   let newsSource = '';
 
+  let currentLayout = 'classic';
+
   // DOM refs
   const $temp = document.getElementById('temp');
   const $weatherIcon = document.getElementById('weather-icon');
@@ -18,6 +20,10 @@
   const $newsHeadline = document.getElementById('news-headline');
   const $shabbatSection = document.getElementById('shabbat-section');
   const $shabbatInfo = document.getElementById('shabbat-info');
+  const $newsPanel = document.getElementById('news-panel');
+  const $newsPanelList = document.getElementById('news-panel-list');
+  const $newsPanelTitle = document.getElementById('news-panel-title');
+  const $newsUpdated = document.getElementById('news-updated');
 
   function updateWeather(weather) {
     if (!weather) return;
@@ -78,6 +84,58 @@
     headlines = news;
   }
 
+  function applyLayout(layout) {
+    layout = layout || 'classic';
+    if (layout === currentLayout) return;
+    currentLayout = layout;
+    document.body.className = 'layout-' + layout;
+    if (layout === 'news-panel') {
+      $newsPanel.classList.remove('hidden');
+    } else {
+      $newsPanel.classList.add('hidden');
+    }
+  }
+
+  function renderNewsPanel(news) {
+    if (!news || news.length === 0 || currentLayout !== 'news-panel') return;
+
+    // Update header with source name
+    if (newsSource) {
+      $newsPanelTitle.textContent = newsSource.toUpperCase();
+    }
+
+    // Update timestamp
+    var now = new Date();
+    var hh = String(now.getHours()).padStart(2, '0');
+    var mm = String(now.getMinutes()).padStart(2, '0');
+    $newsUpdated.textContent = 'Updated ' + hh + ':' + mm;
+
+    $newsPanelList.innerHTML = '';
+    news.forEach(function (item) {
+      var card = document.createElement('a');
+      card.className = 'news-card';
+      card.href = item.link || '#';
+      card.target = '_blank';
+      card.rel = 'noopener';
+
+      if (item.image) {
+        var img = document.createElement('img');
+        img.className = 'news-card-thumb';
+        img.src = item.image;
+        img.alt = '';
+        img.loading = 'lazy';
+        card.appendChild(img);
+      }
+
+      var title = document.createElement('span');
+      title.className = 'news-card-title';
+      title.textContent = item.title;
+      card.appendChild(title);
+
+      $newsPanelList.appendChild(card);
+    });
+  }
+
   function updateBottomBar(state, settings) {
     const mode = (settings && settings.bottomBarMode) || 'auto';
     let showShabbat = false;
@@ -118,11 +176,13 @@
         newsSource = extractSourceName(settings.newsRssUrl);
       }
 
+      applyLayout(settings.layout);
       updateWeather(state.weather);
       updateAirQuality(state.airQuality);
       updateHebrewDate(state.hebrewDate);
       updateAlerts(state.alerts);
       updateBottomBar(state, settings);
+      renderNewsPanel(state.news);
     } catch (err) {
       console.error('Dashboard poll error:', err);
     }

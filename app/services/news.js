@@ -11,11 +11,19 @@ async function poll(state) {
     const parsed = await parseStringPromise(xml, { trim: true });
 
     const items = parsed.rss.channel[0].item || [];
-    state.news = items.slice(0, 10).map((item) => ({
-      title: item.title[0],
-      link: item.link[0],
-      pubDate: item.pubDate ? item.pubDate[0] : null,
-    }));
+    state.news = items.slice(0, 10).map((item) => {
+      let image = null;
+      if (item.description && item.description[0]) {
+        const imgMatch = item.description[0].match(/<img[^>]+src=["']([^"']+)["']/i);
+        if (imgMatch) image = imgMatch[1];
+      }
+      return {
+        title: item.title[0],
+        link: item.link[0],
+        pubDate: item.pubDate ? item.pubDate[0] : null,
+        image,
+      };
+    });
   } catch (err) {
     console.error('News poll error:', err.message);
   }

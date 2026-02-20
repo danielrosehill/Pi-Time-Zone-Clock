@@ -16,6 +16,7 @@ const DEFAULTS = {
   timezone: 'Asia/Jerusalem',
 
   // Display
+  layout: 'classic',
   bottomBarMode: 'auto',
   use24hr: true,
   alertsEnabled: true,
@@ -29,7 +30,7 @@ const DEFAULTS = {
   shabbatDataInterval: 6 * 60 * 60 * 1000,
   shabbatCheckInterval: 60 * 1000,
   _alertsPollInterval: 60 * 1000,
-  newsInterval: 5 * 60 * 1000,
+  newsInterval: 15 * 60 * 1000,
 };
 
 // Maps environment variable names to config keys with type parsers
